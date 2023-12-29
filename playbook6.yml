@@ -1,0 +1,20 @@
+---
+- hosts: webserver
+  become: true
+  become_user: root
+  vars:
+    src_path: /etc/ansible/Ansible_playbooks
+    dest_path: /var/www/html
+  tasks: 
+  - name: install httpd
+    yum: name=httpd state=present
+  - name: start httpd
+    service: name=httpd state=started
+  - name: Deploy html file 
+    copy: src={{src_path}}/index.html dest={{dest_path}}
+    notify: restart httpd
+  handlers:
+  - name: restart httpd
+    service: name=httpd state=restarted
+
+...

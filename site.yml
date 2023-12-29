@@ -1,0 +1,9 @@
+- hosts: webserver
+  become: true
+  become_user: root
+  vars:
+   jenkins2_config_http_port: 8989
+  roles:
+  - tomcat
+  - apache
+  - lean_delivery.jenkins
